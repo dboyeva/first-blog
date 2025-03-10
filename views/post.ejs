@@ -1,0 +1,16 @@
+<%- include("partials/header") %>
+
+<nav class="mb-4 navbar" style="background-color: #bd7d70; color: white;">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1">Collective Wellness</span>
+      <a class="navbar-brand" href="/" style="color: white; font-size: large;">Back to Home</a>
+    </div>
+  </nav>
+
+<div class="container open-sans mb-4 mx-auto p-4 rounded shadow custom-bg">
+  <h1 class="blog-title mb-4" style="color: #bd7d70; font-size: x-large;"><%= title %></h1>
+  <p class="blog-content mb-4"><%= content %></p>
+    <a class="btn btn-dark" style="background-color: #bd7d70; border: #bd7d70;" href="/edit/<%= id %>">Edit</a>
+</div>
+
+<%- include("partials/footer") %>

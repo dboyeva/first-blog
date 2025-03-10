@@ -1,0 +1,35 @@
+<%- include("partials/header") %>
+
+<nav class="mb-4 navbar" style="background-color: #bd7d70; color: white">
+  <div class="container-fluid">
+    <span class="navbar-brand mb-0 h1">Collective Wellness</span>
+  </div>
+</nav>
+
+<div class="container custom-body-colour">
+  <h1 class="logo open-sans" style="color: white; margin-bottom: 30px; text-align: center; font-size: x-large;">
+    Blog about your wellness practices
+  </h1>
+
+  <div class="form-container open-sans mx-auto p-4 rounded shadow custom-bg m-4" style="max-width: 800px;">
+    <form class="mb-3" action="/submit" method="POST">
+      <div class="form-group">
+        <input class="form-control form-input mb-3" type="text" name="blogTitle" placeholder="Enter Title" />
+      </div>
+      <div class="form-group">
+        <textarea class="form-control form-input mb-3" name="blogContent" placeholder="Write your blog" id="floatingTextarea2" style="height: 200px;"></textarea>
+      </div>
+      <input class="btn btn-primary w-100 custom-button" type="submit" value="Publish"/>
+    </form>
+  </div>
+
+  <div class="blog-container open-sans">
+    <% for (var i = 0; i < allBlogs.length; i++) { %>
+    <h2 class="blog-title text-center m-1">
+      <a style="color: white; font-size: large;" href="/post/<%= i %>"><%= allBlogs[i].title %></a>
+    </h2>
+    <% } %>
+  </div>
+</div>
+
+<%- include("partials/footer") %>

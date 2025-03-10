@@ -1,0 +1,30 @@
+.open-sans {
+  font-family: "Open Sans", serif;
+  font-optical-sizing: auto;
+  font-weight: normal;
+  font-style: normal;
+}
+
+.custom-bg {
+    background-color: #ffc8bd !important; 
+  }
+
+  html, body {
+    background-color: #f29f8f !important;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .custom-body-colour {
+    background-color: #f29f8f !important;
+  }
+
+  .custom-button {
+    background-color: #886b51 !important;
+    border: none !important;
+  }
+
+  .custom-button:hover {
+    background-color: #715943 !important;
+    border: none !important;
+  }

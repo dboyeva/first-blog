@@ -1,0 +1,223 @@
+<%- include("partials/header") %>
+
+<nav class="mb-4 navbar" style="background-color: #bd7d70; color: white">
+  <div class="container-fluid">
+    <span class="navbar-brand mb-0 h1">Collective Wellness</span>
+    <a
+      class="navbar-brand"
+      href="#"
+      id="leavePage"
+      style="color: white; font-size: large"
+      >Back to Home</a
+    >
+  </div>
+</nav>
+
+<div class="container open-sans mx-auto p-4 rounded shadow custom-bg">
+  <h1
+    class="d-flex justify-content-center"
+    style="color: #bd7d70; font-size: xx-large"
+  >
+    Edit Post
+  </h1>
+  <form
+    class="mb-3 mx-auto"
+    action="/edit/<%= id %>"
+    method="POST"
+    style="max-width: 800px"
+  >
+    <div class="form-group">
+      <input
+        class="form-control"
+        type="text"
+        name="blogTitle"
+        value="<%= title %>"
+      />
+    </div>
+    <div class="form-group">
+      <textarea
+        class="form-control mb-4"
+        name="blogContent"
+        style="height: 200px"
+      >
+<%=content%></textarea
+      >
+    </div>
+    <div class="d-flex justify-content-between">
+      <input
+        class="btn btn-dark custom-button"
+        id="publishButton"
+        type="submit"
+        value="Publish"
+      />
+      <button
+        type="button"
+        class="btn btn-danger"
+        data-toggle="modal"
+        data-target="#deleteModal"
+      >
+        Delete
+      </button>
+    </div>
+  </form>
+</div>
+
+<div
+  class="modal fade"
+  id="leavePageModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="leavePageModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="leavePageModalLabel">
+          Confirm You Want To Leave Without Saving
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Cancel"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>
+          You have unsaved changes. Are you sure you want to leave this page?
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-primary" id="confirmLeavePage">
+          Yes, Leave
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="deleteModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="deleteModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Warning!</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Cancel"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>You are about to delete your post.</p>
+      </div>
+      <div class="modal-footer">
+        <form action="/delete/<%= id %>" method="POST">
+          <button type="submit" class="btn btn-danger" id="confirmDeletionOfPost">Delete</button>
+        </form>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+class="modal fade"
+id="inactivityModal"
+tabindex="-1"
+role="dialog"
+aria-labelledby="inactivityModalLabel"
+aria-hidden="true"
+>
+<div class=""modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class=""modal-title" id="inactivityModalLabel">Are you still there?</h5>
+            <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Cancel"
+            >
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="modal-body">
+                <p>
+                    You have been inactive for a while. Do you want to continue editing your post?
+                </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" id="confirmInactivity">
+                        Cancel
+                    </button>
+                    <button type="button" class="btn btn-dark" id="confirmActivity">
+                        Yes, I'm here
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include("partials/footer") %>
+
+<script>
+    let isFormSubmitting = false;
+    let isNavigatingAway = false;
+    let isFormDeleting = false;
+    let isInactive = false;
+
+    function showLeavePageModal(event) {
+      if (!isFormSubmitting && !isFormDeleting) {
+        event.preventDefault();
+        $("#leavePageModal").modal("show");
+      }
+    }
+
+    $("#leavePage").click(showLeavePageModal);
+
+    $("#confirmLeavePage").click(function () {
+        window.removeEventListener("beforeunload", handleBeforeUnload);
+        window.location.href = "/";
+    });
+
+    function handleBeforeUnload(event) {
+      if (!isFormSubmitting && !isNavigatingAway && !isFormDeleting) {
+        event.preventDefault();
+        event.returnValue = "";
+      }
+    }
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    $("#publishButton").click(function () {
+      isFormSubmitting = true;
+    });
+
+    $("#confirmDeletionOfPost").click(function () {
+        isFormDeleting = true;
+        window.removeEventListener("beforeunload", handleBeforeUnload);
+    });
+
+    $("#confirmLeavePage").click(function () {
+      isNavigatingAway = true;
+    });
+
+</script>
